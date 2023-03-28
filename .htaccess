@@ -1,0 +1,14 @@
+RewriteEngine On
+
+# Если запрос начинается с /api, обрабатываем его через бэкенд
+RewriteCond %{REQUEST_URI} ^/api
+RewriteRule ^api/(.*)$ /backend/index.php [L,QSA]
+
+# Все остальные запросы перенаправляем на index.html в папке frontend
+RewriteCond %{REQUEST_URI} !^/api
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteRule ^/frontend/index.html [L,QSA]
+RewriteRule ^/index.html [L,QSA]
+
+# Не получилось с папкой frontend. Пришлось фронт кинуть в корневую папку.
