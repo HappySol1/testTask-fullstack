@@ -8,4 +8,4 @@ RewriteRule ^api/(.*)$ /backend/index.php [L,QSA]
 RewriteCond %{REQUEST_URI} !^/api
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-# RewriteRule ^/dist/index.html [L,QSA]
+RewriteRule ^/dist/index.html [L,QSA]
