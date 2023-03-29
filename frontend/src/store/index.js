@@ -4,6 +4,7 @@ import {
   createPostApi,
   deletePostApi
 } from '@/api/requests'
+import { encrypt, decrypt } from '@/helpers/encrypt'
 
 export default createStore({
   state: {
@@ -28,11 +29,13 @@ export default createStore({
     },
     addMessage(state, payload) {
       // state.messagesArr.push(payload)
-      state.messagesArr = [...state.messagesArr, payload]
+      state.messagesArr = [...state.messagesArr, { ...payload, text: decrypt(payload.text) }]
     },
 
     addPosts(state, payload) {
       state.messagesArr = payload
+      console.log(payload);
+      console.log(payload.map(el => el.text = decrypt(el.text)))
     },
 
   },
@@ -41,8 +44,11 @@ export default createStore({
       commit('setName', payload)
     },
     addMessage({ commit, state }, payload) {
+      let a = encrypt(payload)
+      // console.log(a);
+      // console.log(decrypt(a));
       commit('toggleisRequest', true)
-      createPostApi({ text: payload, username: state.name ? state.name : 'Аноним' })
+      createPostApi({ text: encrypt(payload), username: state.name ? state.name : 'Аноним' })
         .then(res => {
           commit('addMessage', res.data)
           commit('toggleisRequest', false)
