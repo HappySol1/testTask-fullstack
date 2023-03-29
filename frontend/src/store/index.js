@@ -33,9 +33,7 @@ export default createStore({
     },
 
     addPosts(state, payload) {
-      state.messagesArr = payload
-      console.log(payload);
-      console.log(payload.map(el => el.text = decrypt(el.text)))
+      state.messagesArr = payload.map(el => el.text = decrypt(el.text))
     },
 
   },
@@ -44,9 +42,6 @@ export default createStore({
       commit('setName', payload)
     },
     addMessage({ commit, state }, payload) {
-      let a = encrypt(payload)
-      // console.log(a);
-      // console.log(decrypt(a));
       commit('toggleisRequest', true)
       createPostApi({ text: encrypt(payload), username: state.name ? state.name : 'Аноним' })
         .then(res => {
